@@ -1,7 +1,7 @@
 package com.example.greeting_app.controller;
 
 import com.example.greeting_app.model.greetingEntity;
-import com.example.greeting_app.model.service.greetingService;
+import com.example.greeting_app.service.greetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
