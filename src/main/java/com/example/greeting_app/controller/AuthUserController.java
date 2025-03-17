@@ -1,9 +1,6 @@
 package com.example.greeting_app.controller;
 
-import com.example.greeting_app.dto.AuthUserDTO;
-import com.example.greeting_app.dto.ForgetPassword;
-import com.example.greeting_app.dto.LoginDTO;
-import com.example.greeting_app.dto.ResponseDTO;
+import com.example.greeting_app.dto.*;
 import com.example.greeting_app.model.AuthUser;
 import com.example.greeting_app.service.AuthenticationService;
 import jakarta.validation.Valid;
@@ -38,6 +35,15 @@ public class AuthUserController {
         String responseMessage = authenticationService.forgotPassword(email, forgotPasswordDTO.getPassword());
         ResponseDTO responseDTO = new ResponseDTO(responseMessage, null);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/auth/resetPassword/{email}")
+    public ResponseEntity<ResponseDTO> resetPassword(@PathVariable String email,
+                                                     @Valid @RequestBody ResetPassword resetPasswordDTO) {
+        String responseMessage = authenticationService.resetPassword(email,
+                resetPasswordDTO.getCurrentPassword(),
+                resetPasswordDTO.getNewPassword());
+        return new ResponseEntity<>(new ResponseDTO(responseMessage, null), HttpStatus.OK);
     }
 
 }
