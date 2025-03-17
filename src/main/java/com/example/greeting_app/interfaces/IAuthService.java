@@ -2,7 +2,7 @@ package com.example.greeting_app.interfaces;
 
 import com.example.greeting_app.dto.authUserDTO;
 import com.example.greeting_app.dto.loginDTO;
-import com.example.greeting_app.model.User;
+import org.springframework.security.core.userdetails.User;
 
 public interface IAuthService {
     User register(authUserDTO userDTO) throws Exception;
