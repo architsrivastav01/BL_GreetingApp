@@ -1,10 +1,11 @@
 package com.example.greeting_app.controller;
 
 
-import com.example.greeting_app.dto.authUserDTO;
-import com.example.greeting_app.dto.loginDTO;
-import com.example.greeting_app.dto.responseDTO;
-import com.example.greeting_app.service.authService;
+import com.example.greeting_app.dto.AuthUserDTO;
+import com.example.greeting_app.dto.LoginDTO;
+import com.example.greeting_app.dto.ResponseDTO;
+import com.example.greeting_app.model.AuthUser;
+import com.example.greeting_app.service.AuthenticationService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -15,28 +16,28 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 //@RequestMapping("/auth")
-public class authController {
+public class authUserController {
     @Autowired
-    authService authenticationService;
+    AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<responseDTO> register(@Valid @RequestBody authUserDTO userDTO) throws Exception{
-        authUserDTO user = new authUserDTO();
+    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody AuthUserDTO userDTO) throws Exception{
+        AuthUserDTO user = new AuthUserDTO();
         user.setEmail(userDTO.getEmail());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setPassword(userDTO.getPassword());
 
-        User savedUser = authenticationService.register(user);
-        responseDTO responseUserDTO = new responseDTO("User details submitted!", savedUser);
+        AuthUser savedUser = authenticationService.register(user);
+        ResponseDTO responseUserDTO = new ResponseDTO("User details submitted!", savedUser);
 
         return new ResponseEntity<>(responseUserDTO, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<responseDTO> login(@Valid @RequestBody loginDTO loginDTO){
+    public ResponseEntity<ResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO){
         String result=authenticationService.login(loginDTO);
-        responseDTO responseUserDTO=new responseDTO("Login successfully!!",result);
+        ResponseDTO responseUserDTO=new ResponseDTO("Login successfully!!",result);
         return  new ResponseEntity<>(responseUserDTO,HttpStatus.OK);
     }
 
